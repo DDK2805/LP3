@@ -1,0 +1,105 @@
+def recursive_fibonacci(n):
+    return n if n <= 1 else recursive_fibonacci(n-1) + recursive_fibonacci(n-2)
+
+def non_recursive_fibonacci(n):
+    a, b = 0, 1
+    print(a)
+    for _ in range(n-1):
+        print(b)
+        a, b = b, a + b
+
+if _name_ == "_main_":
+    n = 10
+    for i in range(n):
+        print(recursive_fibonacci(i))
+
+    non_recursive_fibonacci(n)
+
+
+----------
+
+def solve_knapsack():
+    val = [50, 100, 150, 200]
+    wt = [8, 16, 32, 40]
+    W = 64
+    n = len(val)
+    
+    def knapsack(W, n):
+        if n == 0 or W == 0:
+            return 0
+        if wt[n-1] > W:
+            return knapsack(W, n-1)
+        else:
+            return max(
+                val[n-1] + knapsack(W - wt[n-1], n-1),
+                knapsack(W, n-1)
+            )
+    
+    result = knapsack(W, n)
+    print(result)
+
+solve_knapsack()
+
+-------------
+
+values = [60, 100, 120]
+weights = [10, 20, 30]
+capacity = 50
+
+# Calculate ratios and sort items by value-to-weight ratio
+items = sorted(zip(values, weights), key=lambda x: x[0] / x[1], reverse=True)
+
+total_value = 0
+for value, weight in items:
+    if capacity == 0:
+        break
+    if weight <= capacity:
+        capacity -= weight
+        total_value += value
+    else:
+        total_value += value * (capacity / weight)
+        capacity = 0
+
+print("Maximum value in knapsack:", total_value)
+
+---------------
+
+def n_queens(n):
+    col = set()
+    posDiag = set()  # r + c
+    negDiag = set()  # r - c
+    res = []
+
+    board = [["0"] * n for _ in range(n)]
+
+    def backtrack(r):
+        if r == n:
+            copy = ["".join(row) for row in board]
+            res.append(copy)
+            return
+
+        for c in range(n):
+            if c in col or (r + c) in posDiag or (r - c) in negDiag:
+                continue
+
+            col.add(c)
+            posDiag.add(r + c)
+            negDiag.add(r - c)
+            board[r][c] ='Q'          
+ 
+            backtrack(r + 1)
+
+            col.remove(c)
+            posDiag.remove(r + c)
+            negDiag.remove(r - c)
+            board[r][c] ="0"    
+           
+
+    backtrack(0)
+
+    for sol in res:
+        for row in sol:
+            print(row)
+        print()
+
+n_queens(4)
