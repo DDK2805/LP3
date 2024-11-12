@@ -52,7 +52,16 @@ contract StudentDB{
     function TotalStudents() public view returns(uint256){
         return students.length;
     }
-    
+
+ // Fallback function
+    fallback() external payable {
+        // Optionally, you can add logic here, like logging the call or simply allowing Ether to be received.
+    }
+
+    // Receive function to accept Ether directly
+    receive() external payable {
+        // This function is executed when Ether is sent directly to the contract
+    }
 
 
 
