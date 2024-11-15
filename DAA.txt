@@ -93,8 +93,7 @@ def n_queens(n):
             col.remove(c)
             posDiag.remove(r + c)
             negDiag.remove(r - c)
-            board[r][c] ="0"    
-           
+            board[r][c] ="0"             
 
     backtrack(0)
 
